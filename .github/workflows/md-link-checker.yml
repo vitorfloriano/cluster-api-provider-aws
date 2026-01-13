@@ -3,22 +3,9 @@ name: PR check Markdown links
 on:
   workflow_dispatch:
 
-  pull_request:
-    types: [opened, edited, synchronize, reopened]
-    paths:
-      - "**.md"
-
 permissions: {}
 
 jobs:
   markdown-link-check:
-    name: Broken Links
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # tag=v6.0.1
-      - uses: gaurav-nelson/github-action-markdown-link-check@3c3b66f1f7d0900e37b71eca45b63ea9eedfce31 # tag=1.0.17
-        with:
-          use-quiet-mode: "no"
-          config-file: .markdownlinkcheck.json
-          check-modified-files-only: "no"
-          base-branch: ${{ github.base_ref }}
+    - name: Check links with linkcheck
+      uses: filiph/linkcheck@3.0.0
