@@ -1,7 +1,7 @@
 # Summary
 
 - [Introduction](./introduction.md)
-- [Quick Start](quick-start.md)
+- [Quick Start](./user/quick-start.md)
 - [Quick Start Operator](quick-start-operator.md)
 - [AMIs](./topics/images/amis.md)
   - [Published AMIs](./topics/images/built-amis.md)
