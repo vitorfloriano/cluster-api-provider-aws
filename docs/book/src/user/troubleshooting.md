@@ -1,5 +1,55 @@
 # Troubleshooting
 
+## Cluster API with Docker - common issues with docker - 
+
+When provisioning workload clusters using Cluster API with the Docker infrastructure provider,
+provisioning might be stuck:
+
+1. if there are stopped containers on your machine from previous runs. Clean unused containers with [docker rm -f ](https://docs.docker.com/engine/reference/commandline/rm/).
+
+2. if the Docker space on your disk is being exhausted
+    * Run [docker system df](https://docs.docker.com/engine/reference/commandline/system_df/) to inspect the disk space consumed by Docker resources.
+    * Run [docker system prune --volumes](https://docs.docker.com/engine/reference/commandline/system_prune/) to prune dangling images, containers, volumes and networks.
+
+
+## Cluster API with Docker  - "too many open files"
+When creating many nodes using Cluster API and Docker infrastructure, either by creating large Clusters or a number of small Clusters, the OS may run into inotify limits which prevent new nodes from being provisioned.
+If the error  `Failed to create inotify object: Too many open files` is present in the logs of the Docker Infrastructure provider this limit is being hit.
+
+On Linux this issue can be resolved by increasing the inotify watch limits with:
+
+```bash
+sysctl fs.inotify.max_user_watches=1048576
+sysctl fs.inotify.max_user_instances=8192
+```
+
+Newly created clusters should be able to take advantage of the increased limits.
+
+### MacOS and Docker Desktop -  "too many open files"
+This error was also observed in Docker Desktop 4.3 and 4.4 on MacOS. It can be resolved by updating to Docker Desktop for Mac 4.5 or using a version lower than 4.3.
+
+[The upstream issue for this error is closed as of the release of Docker 4.5.0](https://github.com/docker/for-mac/issues/6071)
+
+Note: The below workaround is not recommended unless upgrade or downgrade cannot be performed.
+
+If using a version of Docker Desktop for Mac 4.3 or 4.4, the following workaround can be used:
+
+Increase the maximum inotify file watch settings in the Docker Desktop VM:
+
+1) Enter the Docker Desktop VM
+```bash
+nc -U ~/Library/Containers/com.docker.docker/Data/debug-shell.sock
+```
+2) Increase the inotify limits using sysctl
+```bash
+sysctl fs.inotify.max_user_watches=1048576
+sysctl fs.inotify.max_user_instances=8192
+```
+3) Exit the Docker Desktop VM
+```bash
+exit
+```
+
 ## Resources aren't being created
 
 TODO

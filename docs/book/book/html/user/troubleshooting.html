@@ -172,6 +172,51 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#troubleshooting" id="troubleshooting">Troubleshooting</a></h1>
+<h2><a class="header" href="#cluster-api-with-docker---common-issues-with-docker--" id="cluster-api-with-docker---common-issues-with-docker--">Cluster API with Docker - common issues with docker -</a></h2>
+<p>When provisioning workload clusters using Cluster API with the Docker infrastructure provider,
+provisioning might be stuck:</p>
+<ol>
+<li>
+<p>if there are stopped containers on your machine from previous runs. Clean unused containers with <a href="https://docs.docker.com/engine/reference/commandline/rm/">docker rm -f </a>.</p>
+</li>
+<li>
+<p>if the Docker space on your disk is being exhausted</p>
+<ul>
+<li>Run <a href="https://docs.docker.com/engine/reference/commandline/system_df/">docker system df</a> to inspect the disk space consumed by Docker resources.</li>
+<li>Run <a href="https://docs.docker.com/engine/reference/commandline/system_prune/">docker system prune --volumes</a> to prune dangling images, containers, volumes and networks.</li>
+</ul>
+</li>
+</ol>
+<h2><a class="header" href="#cluster-api-with-docker----too-many-open-files" id="cluster-api-with-docker----too-many-open-files">Cluster API with Docker  - “too many open files”</a></h2>
+<p>When creating many nodes using Cluster API and Docker infrastructure, either by creating large Clusters or a number of small Clusters, the OS may run into inotify limits which prevent new nodes from being provisioned.
+If the error  <code>Failed to create inotify object: Too many open files</code> is present in the logs of the Docker Infrastructure provider this limit is being hit.</p>
+<p>On Linux this issue can be resolved by increasing the inotify watch limits with:</p>
+<pre><code class="language-bash">sysctl fs.inotify.max_user_watches=1048576
+sysctl fs.inotify.max_user_instances=8192
+</code></pre>
+<p>Newly created clusters should be able to take advantage of the increased limits.</p>
+<h3><a class="header" href="#macos-and-docker-desktop----too-many-open-files" id="macos-and-docker-desktop----too-many-open-files">MacOS and Docker Desktop -  “too many open files”</a></h3>
+<p>This error was also observed in Docker Desktop 4.3 and 4.4 on MacOS. It can be resolved by updating to Docker Desktop for Mac 4.5 or using a version lower than 4.3.</p>
+<p><a href="https://github.com/docker/for-mac/issues/6071">The upstream issue for this error is closed as of the release of Docker 4.5.0</a></p>
+<p>Note: The below workaround is not recommended unless upgrade or downgrade cannot be performed.</p>
+<p>If using a version of Docker Desktop for Mac 4.3 or 4.4, the following workaround can be used:</p>
+<p>Increase the maximum inotify file watch settings in the Docker Desktop VM:</p>
+<ol>
+<li>Enter the Docker Desktop VM</li>
+</ol>
+<pre><code class="language-bash">nc -U ~/Library/Containers/com.docker.docker/Data/debug-shell.sock
+</code></pre>
+<ol start="2">
+<li>Increase the inotify limits using sysctl</li>
+</ol>
+<pre><code class="language-bash">sysctl fs.inotify.max_user_watches=1048576
+sysctl fs.inotify.max_user_instances=8192
+</code></pre>
+<ol start="3">
+<li>Exit the Docker Desktop VM</li>
+</ol>
+<pre><code class="language-bash">exit
+</code></pre>
 <h2><a class="header" href="#resources-arent-being-created" id="resources-arent-being-created">Resources aren’t being created</a></h2>
 <p>TODO</p>
 <h2><a class="header" href="#target-clusters-control-plane-machine-is-up-but-target-clusters-apiserver-not-working-as-expected" id="target-clusters-control-plane-machine-is-up-but-target-clusters-apiserver-not-working-as-expected">Target cluster’s control plane machine is up but target cluster’s apiserver not working as expected</a></h2>
