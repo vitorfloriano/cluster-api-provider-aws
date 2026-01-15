@@ -2,7 +2,7 @@
 
 - [Introduction](./introduction.md)
 - [Quick Start](./user/quick-start.md)
-- [Quick Start Operator](quick-start-operator.md)
+- [Quick Start Operator](./user/quick-start-operator.md)
 - [AMIs](./topics/images/amis.md)
   - [Published AMIs](./topics/images/built-amis.md)
   - [Custom AMIs](./topics/images/custom-amis.md)
@@ -18,6 +18,7 @@
     - [Enabling EKS Support](./topics/eks/enabling.md)
     - [Pod Networking](./topics/eks/pod-networking.md)
     - [Creating a cluster](./topics/eks/creating-a-cluster.md)
+    - [Disabling](./topics/eks/creating-a-cluster.md)
     - [Using EKS Console](./topics/eks/eks-console.md)
     - [Using EKS Addons](./topics/eks/addons.md)
     - [Enabling Encryption](./topics/eks/encryption.md)
