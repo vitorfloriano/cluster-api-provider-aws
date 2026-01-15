@@ -39,7 +39,7 @@
     - [Control planes](./topics/failure-domains/control-planes.md)
     - [Worker nodes](./topics/failure-domains/worker-nodes.md)
   - [Userdata Privacy](./topics/userdata-privacy.md)
-  - [Troubleshooting](./topics/troubleshooting.md)
+  - [Troubleshooting](./user/troubleshooting.md)
   - [IAM Permissions Used](./topics/iam-permissions.md)
   - [Ignition support](./topics/ignition-support.md)
   - [External Resource Garbage Collection](./topics/external-resource-gc.md)
