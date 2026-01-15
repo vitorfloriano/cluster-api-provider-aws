@@ -7,6 +7,7 @@
 - [CRD Reference](./crd/index.md)
 - [Reference](./topics/reference/reference.md)
   - [Glossary](./reference/glossary.md)
+  - [Providers](./reference/providers.md)
   - [Ports](./topics/reference/ports.md)
   - [Jobs](./topics/reference/jobs.md)
   - [Version Support](./topics/reference/versions.md)
