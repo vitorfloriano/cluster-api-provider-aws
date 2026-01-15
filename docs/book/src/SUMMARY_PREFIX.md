@@ -18,7 +18,6 @@
     - [Enabling EKS Support](./topics/eks/enabling.md)
     - [Pod Networking](./topics/eks/pod-networking.md)
     - [Creating a cluster](./topics/eks/creating-a-cluster.md)
-    - [Disabling](./topics/eks/disabling.md)
     - [Using EKS Console](./topics/eks/eks-console.md)
     - [Using EKS Addons](./topics/eks/addons.md)
     - [Enabling Encryption](./topics/eks/encryption.md)
